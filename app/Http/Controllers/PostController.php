@@ -12,6 +12,7 @@ class PostController extends Controller
 {
     public function index() {
         $posts = Post::all();
+
         return view('post.index', ['posts' => $posts]);
     }
 
@@ -49,6 +50,7 @@ class PostController extends Controller
             'title' => 'required',
             'content' => 'required',
             "image" => "nullable|string",
+            "category_id" => "integer",
             "tags" => "nullable|array"
         ]);
 
