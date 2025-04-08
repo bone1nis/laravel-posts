@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,6 +12,8 @@ use Inertia\Inertia;
 //    return Inertia::render('Dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
     Route::get('posts', IndexController::class)->name('posts.index');
     Route::get('posts/create', CreateController::class)->name('posts.create');
@@ -20,8 +23,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
     Route::put('posts/{post}', UpdateController::class)->name('posts.update');
     Route::delete('posts/{post}', DestroyController::class)->name('posts.destroy');
 });
-
-
+Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', "middleware" => \App\Http\Middleware\AdminPanelMiddleware::class], function () {
+    Route::group([], function () {
+        Route::get("/post", App\Http\Controllers\Admin\IndexController::class)->name("admin.post.index");
+    });
+});
 
 Route::get("/main", [App\Http\Controllers\MainController::class, 'index'])->name("main.index");
 Route::get("/about", [App\Http\Controllers\AboutController::class, 'index'])->name("about.index");
@@ -31,3 +37,7 @@ Route::get("cakes", [App\Http\Controllers\CakeController::class, 'index']);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

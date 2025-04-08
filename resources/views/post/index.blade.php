@@ -30,5 +30,6 @@
         @empty
             <div class="alert alert-info text-center">Постов пока нет.</div>
         @endforelse
+        {{ $posts->withQueryString()->links() }}
     </div>
 @endsection

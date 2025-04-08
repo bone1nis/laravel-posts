@@ -9,10 +9,13 @@
 <body>
 <header class="container">
     <nav>
-        <a class="red" href="{{ route("main.index") }}">Main</a>
+        <a class="red" href="{{ route("home") }}">Home</a>
         <a href="{{ route("about.index") }}">About</a>
         <a href="{{ route("contact.index") }}">Contact</a>
         <a href="{{ route("posts.index") }}">Posts</a>
+        @can ("isAdmin", auth()->user())
+        <a href="{{ route("admin.post.index") }}">Admin</a>
+        @endcan
     </nav>
 </header>
 <main class="container">
