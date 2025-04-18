@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Requests\Post\UpdateRequest;
+use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
 
 class UpdateController extends BaseController
@@ -14,6 +15,8 @@ class UpdateController extends BaseController
 
         $this->service->update($post, $data);
 
-        return redirect()->route('posts.index');
+        return new PostResource($post);
+
+//        return redirect()->route('posts.index');
     }
 }

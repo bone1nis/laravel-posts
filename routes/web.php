@@ -23,6 +23,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'], function () {
     Route::put('posts/{post}', UpdateController::class)->name('posts.update');
     Route::delete('posts/{post}', DestroyController::class)->name('posts.destroy');
 });
+
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', "middleware" => \App\Http\Middleware\AdminPanelMiddleware::class], function () {
     Route::group([], function () {
         Route::get("/post", App\Http\Controllers\Admin\IndexController::class)->name("admin.post.index");
